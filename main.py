@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from convert_bitcoin import get_current_bitcoin_prices, get_conversion_rate
+from prices import get_current_bitcoin_prices, get_conversion_rate, get_tesla_price
 
 
 def main() -> None:
@@ -8,8 +8,9 @@ def main() -> None:
 
     nzd_price = bitcoin_price.usd_price * usd_to_nzd_rate
     price_time = bitcoin_price.sample_date.isoformat()
+    tesla_price = get_tesla_price() * usd_to_nzd_rate
 
-    print(f"The price is ${nzd_price:.2f} at {price_time}")
+    print(f"The price of bitcoin is ${nzd_price:.2f} at {price_time}. TLSA is ${tesla_price:.2f}")
 
 
 if __name__ == "__main__":

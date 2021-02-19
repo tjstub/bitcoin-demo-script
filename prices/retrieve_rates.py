@@ -2,7 +2,7 @@ import requests
 from dataclasses import dataclass
 from datetime import datetime
 from dateutil.parser import parse
-
+import os
 
 @dataclass
 class BitcoinData:
@@ -39,3 +39,11 @@ def get_conversion_rate() -> float:
 
     # return the USD-to-NZD rate
     return rates_json["rates"]["NZD"]
+
+def get_tesla_price() -> float:
+    token = os.environ["IEXTOKEN"]
+    price_result = requests.get(f"https://cloud.iexapis.com/stable/stock/TSLA/quote/?token={token}")
+    if price_result.status_code != 200:
+        raise RuntimeError("Could not get stock price for Tesla!")
+
+    return price_result.json()["iexRealtimePrice"]
